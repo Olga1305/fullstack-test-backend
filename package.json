@@ -8,12 +8,15 @@
     "seed": "node ./bin/seed.js"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
+    "connect-mongo": "^3.0.0",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
     "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "express-session": "^1.17.0",
+    "mongoose": "^5.4.17",
+    "morgan": "~1.9.0",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "eslint": "^6.7.2",

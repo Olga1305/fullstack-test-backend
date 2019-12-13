@@ -1,9 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const Beer = require('../models/Beer');
+const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+// GET 1st page beers
+router.get('/', async (req, res, next) => {
+  try {
+    const beers = await Beer.find().limit(24);
+    res.json(beers);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
