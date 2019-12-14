@@ -12,4 +12,22 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// GET beers by query
+router.get('/:query', async (req, res, next) => {
+  const { query } = req.params;
+  try {
+    if (query !== '') {
+      const allBeers = await Beer.find();
+      const beers = allBeers.filter((item) => {
+        return (
+          item.name.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+      res.json(beers);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
