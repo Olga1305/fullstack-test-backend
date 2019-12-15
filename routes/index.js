@@ -4,6 +4,16 @@ const router = express.Router();
 
 const pageSize = 20;
 
+// GET all beers (just in case)
+router.get('/', async (req, res, next) => {  
+  try {
+    const beers = await Beer.find();
+    res.json(beers);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // GET paginated beers
 router.get('/page/:currentPage', async (req, res, next) => {
   const { currentPage } = req.params;

@@ -6,8 +6,11 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const cors = require('cors')({ origin: true, credentials: true });
+const fetch = require('node-fetch');
+const Beer = require('./models/Beer');
 
 require('dotenv').config();
+
 
 mongoose.set('useCreateIndex', true);
 mongoose
@@ -18,6 +21,48 @@ mongoose
   .catch((error) => {
     console.error(error);
   });
+
+
+// Fetch beers from Punk API and insert on MongoDB
+
+const beers = [];
+
+const cleanDB = async () => {
+  await Beer.deleteMany({});
+}
+
+cleanDB();
+
+const getData = async (url) => {
+  try {
+    const response = await fetch(url);
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const result = async (arr) => {
+  try {
+    for (let i = 1; i < 6; i++) {
+      const data = await getData(`https://api.punkapi.com/v2/beers?page=${i}&per_page=80`);
+      arr = arr.concat(data);
+    }
+    return arr;
+  } catch (error) {
+    console.log(error);
+  }
+}
+  
+result(beers)  
+  .then((beers) => beers.map(beer => {
+    const newBeer = new Beer(beer);
+    newBeer.save();
+  }))
+  .then((beers) => console.log('beers inserted on DB: ', beers.length))
+
+// End of fetch and import
 
 
 const indexRouter = require('./routes/index');
