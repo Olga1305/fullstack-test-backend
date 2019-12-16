@@ -34,4 +34,10 @@ The Front-end part of this project is on  [Client Repository](https://github.com
   |--|--|--|--|--|--|
   |`/:query`|GET|`query=[String]`|None|Status 200|Status 400 |
 
-
+**Get Single Beer**
+----
+  Returns json data with a single beer.
+  
+  | URL | Method | Params | Data Params | Success response | Error response|
+  |--|--|--|--|--|--|
+  |`/single/:id`|GET|`id=[Number]`|None|Status 200|Status 400 |

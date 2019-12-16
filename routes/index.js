@@ -44,4 +44,15 @@ router.get('/:query', async (req, res, next) => {
   }
 });
 
+// GET single beer
+router.get('/single/:id', async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const beer = await Beer.findOne({ id });
+    res.json(beer);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
